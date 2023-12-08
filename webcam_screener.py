@@ -72,6 +72,8 @@ counter = 0
 
 last_5_frames = []
 
+swipe_counter = 0
+
 while True:
     ret, frame = cap.read()
     reflected_image = cv2.flip(frame, 1)
@@ -88,7 +90,11 @@ while True:
         inp = torch.stack(last_5_frames, dim=0)
         inp = inp.view(1, 1, 5, 200, 100)
         predict, _, _ = model(inp)
-        print('DEFAULT' if predict.argmax(dim=1) == torch.tensor([0]) else 'SWIPE-UP', end='\n\n\n\n')
+        label = 'DEFAULT' if predict.argmax(dim=1) == torch.tensor([0]) else 'SWIPE-UP'
+        if label == 'SWIPE-UP':
+            swipe_counter += 1
+            print(label, swipe_counter)
+
     elif len(last_5_frames) > 10:
         last_5_frames.clear()
 
