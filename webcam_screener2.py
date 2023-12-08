@@ -3,7 +3,7 @@ import cv2
 from time import sleep
 from tqdm import tqdm
 
-folder_index = 55
+folder_index = 65
 dirname = str(folder_index) + '/'
 
 canny_def = 'canny_filter_default-30'
